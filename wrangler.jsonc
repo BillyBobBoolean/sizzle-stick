@@ -1,14 +1,9 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "sizzle-stick",
-  "compatibility_date": "2026-05-13",
-  "observability": {
-    "enabled": true
-  },
+  "main": "src/index.ts",  // if you have a Worker
+  "compatibility_date": "2025-05-13",
   "assets": {
-    "directory": "."
-  },
-  "compatibility_flags": [
-    "nodejs_compat"
-  ]
+    "directory": "./public",
+    "binding": "ASSETS"
+  }
 }
