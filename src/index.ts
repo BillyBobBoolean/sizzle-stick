@@ -1,53 +1,47 @@
-// src/index.ts
-interface Env {
-  // Add any environment variables here if needed
-}
-
 export default {
-  async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
+  async fetch(request: Request): Promise<Response> {
     const url = new URL(request.url);
     const path = url.pathname;
     
-    // Serve static assets from the public folder
-    if (path === '/' || path === '/index.html') {
-      return serveAsset('index.html');
+    // Map routes to files in public/pages/
+    const fileMap: Record<string, string> = {
+      '/': '/pages/index.html',
+      '/index.html': '/pages/index.html',
+      '/structural.html': '/pages/structural.html',
+      '/artisanal.html': '/pages/artisanal.html',
+      '/bio.html': '/pages/bio.html',
+      '/style.css': '/pages/style.css',
+      '/structural': '/pages/structural.html',
+      '/artisanal': '/pages/artisanal.html',
+      '/bio': '/pages/bio.html',
+    };
+    
+    const assetPath = fileMap[path];
+    
+    if (!assetPath) {
+      return new Response(`404: Not Found - ${path}`, { status: 404 });
     }
     
-    if (path === '/structural.html' || path === '/structural') {
-      return serveAsset('structural.html');
+    try {
+      // For Workers with assets binding
+      const asset = await fetch(`https://sizzle-stick.daviscallumvt.workers.dev${assetPath}`);
+      
+      if (!asset.ok) {
+        return new Response(`404: Asset not found - ${assetPath}`, { status: 404 });
+      }
+      
+      const contentType = assetPath.endsWith('.html') ? 'text/html' : 
+                         assetPath.endsWith('.css') ? 'text/css' : 
+                         'text/plain';
+      
+      return new Response(asset.body, {
+        headers: {
+          'Content-Type': contentType,
+          'Cache-Control': 'public, max-age=3600'
+        }
+      });
+    } catch (error) {
+      return new Response(`500: Internal Error - ${error}`, { status: 500 });
     }
-    
-    if (path === '/artisanal.html' || path === '/artisanal') {
-      return serveAsset('artisanal.html');
-    }
-    
-    if (path === '/bio.html' || path === '/bio') {
-      return serveAsset('bio.html');
-    }
-    
-    if (path === '/style.css') {
-      return serveAsset('style.css', 'text/css');
-    }
-    
-    // 404 handler
-    return new Response('Page not found', { status: 404 });
   }
 };
-
-// Helper function to serve assets from the public folder
-async function serveAsset(filename: string, contentType?: string): Promise<Response> {
-  // In production, assets are bundled with the Worker
-  // For local development, you'd read from the filesystem
-  const asset = await fetch(`https://raw.githubusercontent.com/YOUR_USERNAME/sizzle-stick/main/public/${filename}`);
-  
-  const headers = new Headers();
-  if (contentType) {
-    headers.set('Content-Type', contentType);
-  } else if (filename.endsWith('.html')) {
-    headers.set('Content-Type', 'text/html');
-  } else if (filename.endsWith('.css')) {
-    headers.set('Content-Type', 'text/css');
-  }
-  
-  return new Response(asset.body, { headers });
-}
