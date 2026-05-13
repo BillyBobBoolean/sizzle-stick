@@ -1,490 +1,103 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>SizzleStick | Home of Flavor & Heat</title>
-    <!-- A clean, modern font from Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 (free icons) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SizzleStick Welding | Metal Fabrication & Art</title>
+    <!-- External CSS stylesheet separated into page sections -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #fefaf5;   /* warm off-white */
-            color: #2c241a;
-            line-height: 1.5;
-            scroll-behavior: smooth;
-        }
-
-        /* containers and layout */
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        /* header / navigation */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            padding: 1.5rem 0;
-            border-bottom: 2px solid #ffddd3;
-        }
-
-        .logo {
-            font-size: 1.9rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #e25822, #c93a0e);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 2px 2px 10px rgba(226, 88, 34, 0.1);
-        }
-
-        .logo span {
-            font-size: 1.9rem;
-            background: none;
-            -webkit-background-clip: unset;
-            background-clip: unset;
-            color: #e25822;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2.2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            font-weight: 600;
-            color: #4a3729;
-            transition: color 0.2s ease;
-            font-size: 1rem;
-        }
-
-        .nav-links a:hover {
-            color: #e25822;
-        }
-
-        /* hero section */
-        .hero {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 2rem;
-            padding: 3rem 0 4rem 0;
-        }
-
-        .hero-content {
-            flex: 1;
-            min-width: 260px;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1.2;
-            margin-bottom: 1.2rem;
-            color: #2c241a;
-        }
-
-        .hero-highlight {
-            color: #e25822;
-            border-bottom: 3px solid #ffa06f;
-            display: inline-block;
-        }
-
-        .hero-content p {
-            font-size: 1.2rem;
-            color: #5a4a3a;
-            margin-bottom: 2rem;
-            max-width: 520px;
-        }
-
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .btn-primary {
-            background-color: #e25822;
-            color: white;
-            border: none;
-            padding: 0.85rem 2rem;
-            font-weight: 600;
-            border-radius: 48px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: transform 0.2s, background 0.2s;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 4px 8px rgba(226, 88, 34, 0.2);
-        }
-
-        .btn-primary:hover {
-            background-color: #c54518;
-            transform: translateY(-2px);
-        }
-
-        .btn-outline {
-            background: transparent;
-            border: 2px solid #e25822;
-            color: #e25822;
-            padding: 0.8rem 2rem;
-            font-weight: 600;
-            border-radius: 48px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-outline:hover {
-            background-color: #e25822;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .hero-image {
-            flex: 1;
-            min-width: 260px;
-            background: linear-gradient(145deg, #ffe3d4, #ffcdb5);
-            border-radius: 48px;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
-        }
-
-        .hero-image i {
-            font-size: 12rem;
-            color: #e05a22;
-            filter: drop-shadow(4px 8px 12px rgba(0,0,0,0.1));
-        }
-
-        .hero-image p {
-            margin-top: 1rem;
-            font-weight: 500;
-            color: #a0421a;
-        }
-
-        /* features / pillars */
-        .features {
-            padding: 4rem 0;
-            text-align: center;
-        }
-
-        .section-title {
-            font-size: 2.3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #2c241a;
-        }
-
-        .section-sub {
-            font-size: 1.1rem;
-            color: #6b5a4a;
-            max-width: 640px;
-            margin: 0 auto 3rem auto;
-        }
-
-        .cards {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: center;
-        }
-
-        .card {
-            background: white;
-            border-radius: 28px;
-            padding: 2rem 1.8rem;
-            flex: 1;
-            min-width: 220px;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.02), 0 6px 6px rgba(0, 0, 0, 0.03);
-            transition: all 0.25s ease;
-            border: 1px solid #ffede5;
-        }
-
-        .card:hover {
-            transform: translateY(-6px);
-            border-color: #ffc7b0;
-            box-shadow: 0 20px 25px -12px rgba(226, 88, 34, 0.12);
-        }
-
-        .card i {
-            font-size: 2.8rem;
-            color: #e25822;
-            margin-bottom: 1.2rem;
-        }
-
-        .card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .card p {
-            color: #5a4a3a;
-        }
-
-        /* about / cta banner */
-        .about-cta {
-            background: linear-gradient(110deg, #fff0e8, #ffe4d8);
-            border-radius: 48px;
-            padding: 3rem 2.5rem;
-            margin: 2rem 0 4rem 0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 2rem;
-        }
-
-        .about-text {
-            flex: 2;
-        }
-
-        .about-text h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.75rem;
-        }
-
-        .about-text p {
-            max-width: 550px;
-            color: #4a3729;
-        }
-
-        .about-stats {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-            justify-content: flex-start;
-            margin-top: 1.5rem;
-        }
-
-        .stat {
-            text-align: center;
-        }
-
-        .stat-number {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #e25822;
-        }
-
-        /* footer */
-        footer {
-            background-color: #2c241a;
-            color: #e2cfbf;
-            padding: 2.5rem 0 2rem 0;
-            margin-top: 2rem;
-            border-radius: 32px 32px 0 0;
-        }
-
-        .footer-content {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: center;
-            gap: 1.5rem;
-        }
-
-        .footer-logo {
-            font-size: 1.7rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #ffa36b, #ff7e48);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .social-links a {
-            color: #e2cfbf;
-            margin-left: 1.2rem;
-            font-size: 1.4rem;
-            transition: color 0.2s;
-        }
-
-        .social-links a:hover {
-            color: #e25822;
-        }
-
-        .copyright {
-            text-align: center;
-            margin-top: 2rem;
-            font-size: 0.85rem;
-            border-top: 1px solid #3f3328;
-            padding-top: 1.8rem;
-        }
-
-        @media (max-width: 780px) {
-            .navbar {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .hero-content h1 {
-                font-size: 2.6rem;
-            }
-            .section-title {
-                font-size: 1.9rem;
-            }
-            .container {
-                padding: 0 1.5rem;
-            }
-            .hero-image i {
-                font-size: 8rem;
-            }
-        }
-    </style>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="container">
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="logo">
-            <span>🍳</span> SizzleStick
+    <!-- ===== HEADER / NAVIGATION (shared across pages) ===== -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo"><span>SizzleStick</span> Welding</div>
+                <ul class="nav-links">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="structural.html">Structural Projects</a></li>
+                    <li><a href="artisanal.html">Artisanal & Architecture</a></li>
+                    <li><a href="bio.html">Bio</a></li>
+                </ul>
+            </nav>
         </div>
-        <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Recipes</a></li>
-            <li><a href="#">Gear</a></li>
-            <li><a href="#">Community</a></li>
-            <li><a href="#">Shop</a></li>
-        </ul>
-    </nav>
+    </header>
 
-    <!-- Hero section: the sizzle statement -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Turn up the <span class="hero-highlight">heat</span>.<br>Master the sizzle.</h1>
-            <p>High-performance cast iron & carbon steel cookware designed for home chefs who crave restaurant-level sear, caramelization, and flavor.</p>
-            <div class="btn-group">
-                <a href="#" class="btn-primary">Explore collection <i class="fas fa-arrow-right" style="margin-left: 6px;"></i></a>
-                <a href="#" class="btn-outline">Our story</a>
-            </div>
-        </div>
-        <div class="hero-image">
-            <i class="fas fa-fire"></i>
-            <i class="fas fa-utensils" style="font-size: 3rem; margin-top: -1rem; display: block;"></i>
-            <p>Sizzle • Sear • Stick to perfection</p>
-        </div>
-    </section>
-
-    <!-- Feature highlights -->
-    <section class="features">
-        <h2 class="section-title">Why SizzleStick?</h2>
-        <p class="section-sub">We built cookware that brings restaurant-quality results to your home kitchen — durable, naturally non-stick, and packed with character.</p>
-        <div class="cards">
-            <div class="card">
-                <i class="fas fa-temperature-high"></i>
-                <h3>Unmatched heat retention</h3>
-                <p>Even, intense heat that locks in the sear and gives you that perfect golden crust every time.</p>
-            </div>
-            <div class="card">
-                <i class="fas fa-leaf"></i>
-                <h3>Naturally seasoned</h3>
-                <p>100% chemical-free non-stick surface developed over time — the more you cook, the better it gets.</p>
-            </div>
-            <div class="card">
-                <i class="fas fa-hand-peace"></i>
-                <h3>Induction & all stoves</h3>
-                <p>Compatible with gas, electric, ceramic, and induction. From campfire to induction, we’ve got you.</p>
-            </div>
-            <div class="card">
-                <i class="fas fa-heart"></i>
-                <h3>Built for life</h3>
-                <p>Heirloom-quality, pre-seasoned cast iron and carbon steel that only improves with age.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- about + mini stats + vibe -->
-    <div class="about-cta">
-        <div class="about-text">
-            <h2>From stovetop to <i class="fas fa-fire"></i> flame</h2>
-            <p>SizzleStick was born from a passion for bold cooking — where the sizzle tells you the flavor is locked in. Our cookware is engineered for high-heat searing, one-pan wonders, and meals that bring people together.</p>
-            <div class="about-stats">
-                <div class="stat">
-                    <div class="stat-number">50k+</div>
-                    <div>Happy chefs</div>
+    <main>
+        <!-- ===== HOMEPAGE SECTION ===== -->
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Forged in Fire,<br><span class="accent">Built to Last</span></h1>
+                    <p>Industrial-grade welding, structural steel fabrication, and custom metal art. From skyscrapers to sculptures — SizzleStick delivers precision and strength.</p>
+                    <div class="hero-buttons">
+                        <a href="structural.html" class="btn-primary">Structural Work <i class="fas fa-arrow-right"></i></a>
+                        <a href="artisanal.html" class="btn-outline">Artisanal Metalwork</a>
+                    </div>
                 </div>
-                <div class="stat">
-                    <div class="stat-number">10yrs</div>
-                    <div>Warranty</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">#1</div>
-                    <div>Sear rating</div>
+                <div class="hero-visual">
+                    <i class="fas fa-welding"></i>
+                    <i class="fas fa-industry"></i>
                 </div>
             </div>
-        </div>
-        <div style="flex: 1; min-width: 140px; text-align: center;">
-            <i class="fas fa-award" style="font-size: 5rem; color: #e25822; opacity: 0.8;"></i>
-            <p style="margin-top: 10px; font-weight: 600;">Kitchen Hero 2025</p>
-        </div>
-    </div>
-</div> <!-- end container for header/features but footer full width -->
-    
-<!-- featured recipe teaser extra block before footer -->
-<div class="container">
-    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 2rem; margin-bottom: 2rem; background: #ffffff; border-radius: 2rem; padding: 1.5rem 2rem; box-shadow: 0 4px 14px rgba(0,0,0,0.03);">
-        <div>
-            <span style="background: #ffddd3; padding: 0.3rem 0.9rem; border-radius: 40px; font-weight: 600; font-size: 0.8rem; letter-spacing: 0.5px;">🔥 FEATURED RECIPE</span>
-            <h3 style="margin-top: 0.7rem; font-size: 1.7rem;">Perfect Pan-Seared Steak with Garlic Butter</h3>
-            <p style="max-width: 480px; color: #5a4a3a;">Get the ultimate crust using SizzleStick’s heat retention. Ready in 15 minutes — juicy, flavorful, unforgettable.</p>
-            <a href="#" style="display: inline-flex; align-items: center; gap: 6px; margin-top: 0.6rem; color: #e25822; font-weight: 600; text-decoration: none;">Get the recipe <i class="fas fa-chevron-right" style="font-size: 0.8rem;"></i></a>
-        </div>
-        <div>
-            <i class="fas fa-utensil-spoon" style="font-size: 4rem; color: #e25822; background: #fff2eb; padding: 1rem; border-radius: 50%;"></i>
-        </div>
-    </div>
-</div>
+        </section>
 
-<!-- footer section (full width background) -->
-<footer>
-    <div class="container">
-        <div class="footer-content">
-            <div class="footer-logo">
-                🍳 SizzleStick
+        <section class="capabilities">
+            <div class="container">
+                <h2 class="section-title">What We Do</h2>
+                <div class="cap-grid">
+                    <div class="cap-card">
+                        <i class="fas fa-drafting-compass"></i>
+                        <h3>Structural Engineering</h3>
+                        <p>Heavy fabrication for commercial buildings, bridges, and industrial frameworks.</p>
+                    </div>
+                    <div class="cap-card">
+                        <i class="fas fa-palette"></i>
+                        <h3>Artisanal Metal</h3>
+                        <p>Custom gates, railings, furniture, and architectural accents.</p>
+                    </div>
+                    <div class="cap-card">
+                        <i class="fas fa-hard-hat"></i>
+                        <h3>On-Site Welding</h3>
+                        <p>Mobile welding services for repairs, installations, and custom builds.</p>
+                    </div>
+                </div>
             </div>
-            <div class="social-links">
-                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-                <a href="#" aria-label="Youtube"><i class="fab fa-youtube"></i></a>
-                <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-            </div>
-            <div>
-                <a href="#" style="color:#e2cfbf; text-decoration: none; margin-right: 1rem;">Contact</a>
-                <a href="#" style="color:#e2cfbf; text-decoration: none;">FAQs</a>
-            </div>
-        </div>
-        <div class="copyright">
-            &copy; 2025 SizzleStick — Built for the sizzle, made to last. All sizzles reserved.
-        </div>
-    </div>
-</footer>
+        </section>
 
-<!-- optional tiny interaction: console greeting only for fun -->
-<script>
-    (function() {
-        console.log("🔥 SizzleStick — turn up the heat on your cooking journey!");
-        // simple hover effect for demo cards could be added but not needed
-    })();
-</script>
+        <section class="featured">
+            <div class="container">
+                <div class="featured-banner">
+                    <div class="featured-text">
+                        <h2>Certified & Safety First</h2>
+                        <p>AWS certified welders with 15+ years of experience. We meet AISC and OSHA standards for every structural project.</p>
+                        <a href="bio.html" class="btn-primary">Meet the Team</a>
+                    </div>
+                    <div class="featured-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">SizzleStick<span>Welding</span></div>
+                <p>© 2025 | Built with fire & integrity</p>
+                <div class="socials">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
