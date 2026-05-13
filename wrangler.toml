@@ -4,7 +4,7 @@ compatibility_date = "2025-05-13"
 
 # Serve static assets from the public folder
 [assets]
-directory = "./public"
+directory = "./public/pages"
 binding = "ASSETS"
 
 # For production
