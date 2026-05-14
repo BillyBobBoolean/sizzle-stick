@@ -4,4 +4,4 @@ compatibility_date = "2025-05-13"
 
 # THIS IS THE CRITICAL ADDITION - tells Cloudflare to serve files from /public
 [assets]
-directory = "./public/pages"
+directory = "./public"
