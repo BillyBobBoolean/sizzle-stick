@@ -1,9 +1,0 @@
-{
-  "name": "sizzle-stick",
-  "main": "src/index.ts",  // if you have a Worker
-  "compatibility_date": "2025-05-13",
-  "assets": {
-    "directory": "./public",
-    "binding": "ASSETS"
-  }
-}
