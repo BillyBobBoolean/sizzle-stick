@@ -9,73 +9,70 @@ export default {
     const url = new URL(request.url);
     let path = url.pathname;
     
-    // Debug endpoint - shows which files are available
+    // Debug endpoint - shows what's available
     if (path === '/debug') {
-      const files = ['/index.html', '/structural.html', '/artisanal.html', '/bio.html', '/styles.css'];
-      let results = '<h1>🔍 Asset Debug</h1><ul>';
+      const possiblePaths = [
+        '/index.html',
+        '/pages/index.html',
+        '/public/pages/index.html',
+        '/assets/index.html',
+        '/structural.html',
+        '/pages/structural.html',
+        '/styles.css',
+        '/pages/styles.css'
+      ];
       
-      for (const file of files) {
-        const found = await this.checkAsset(file, request, env);
-        results += `<li>${file}: ${found ? '✅ Found' : '❌ Not found'}</li>`;
+      let results = '<h1>🔍 Asset Debug - Testing All Possible Paths</h1><ul>';
+      
+      for (const testPath of possiblePaths) {
+        const found = await this.checkAsset(testPath, request, env);
+        results += `<li>${testPath}: ${found ? '✅ Found' : '❌ Not found'}</li>`;
       }
       
-      results += '</ul><p>Worker is running correctly.</p>';
-      results += '<p><a href="/">Back to Home</a></p>';
-      
-      return new Response(results, {
-        headers: { 'Content-Type': 'text/html' }
-      });
+      results += '</ul><p><a href="/">Back to Home</a></p>';
+      return new Response(results, { headers: { 'Content-Type': 'text/html' } });
     }
     
-    // Handle root path
-    if (path === '/') {
-      path = '/index.html';
+    // Try multiple possible paths in order
+    const possiblePaths = [
+      path,                                    // Original path
+      `/pages${path}`,                         // Add /pages prefix
+      `/public/pages${path}`,                  // Add /public/pages prefix
+      path === '/' ? '/pages/index.html' : null,
+      path === '/' ? '/index.html' : null,
+    ].filter(p => p !== null);
+    
+    // If no extension, try with .html
+    if (!path.includes('.') && path !== '/') {
+      possiblePaths.push(`${path}.html`);
+      possiblePaths.push(`/pages/${path}.html`);
     }
     
-    // If no file extension, try adding .html (for /structural, /artisanal, /bio)
-    if (!path.includes('.')) {
-      const tryPath = `${path}.html`;
-      const response = await this.serveAsset(tryPath, request, env);
+    // Try each path
+    for (const tryPath of possiblePaths) {
+      const response = await this.serveAsset(tryPath as string, request, env);
       if (response) return response;
     }
     
-    // Try to serve the exact file path
-    const response = await this.serveAsset(path, request, env);
-    if (response) return response;
-    
-    // 404 - File not found
+    // 404 page
     return new Response(
       `<!DOCTYPE html>
       <html>
       <head>
         <title>404 - SizzleStick Welding</title>
         <style>
-          body {
-            font-family: system-ui, -apple-system, sans-serif;
-            background: #0a0a0a;
-            color: #e0e0e0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-          }
+          body { font-family: system-ui; background: #0a0a0a; color: #e0e0e0; display: flex; justify-content: center; align-items: center; height: 100vh; text-align: center; margin: 0; }
           .container { padding: 2rem; }
-          h1 { color: #e35f21; font-size: 4rem; margin-bottom: 1rem; }
-          p { margin-bottom: 1rem; }
+          h1 { color: #e35f21; font-size: 4rem; }
           a { color: #e35f21; text-decoration: none; }
-          a:hover { text-decoration: underline; }
           code { background: #1a1a1a; padding: 0.2rem 0.5rem; border-radius: 6px; }
         </style>
       </head>
       <body>
         <div class="container">
           <h1>404</h1>
-          <p>The page <code>${path}</code> was not found.</p>
-          <p><a href="/debug">🔍 Run Debug</a> | <a href="/">← Return to Homepage</a></p>
-          <hr style="margin: 2rem 0; border-color: #2a2a2a;">
-          <p><small>SizzleStick Welding | Cloudflare Worker</small></p>
+          <p>File not found: <code>${path}</code></p>
+          <p><a href="/debug">🔍 Run Full Debug</a> | <a href="/">Home</a></p>
         </div>
       </body>
       </html>`,
@@ -91,23 +88,10 @@ export default {
       const response = await env.ASSETS.fetch(assetRequest);
       
       if (response.status === 200) {
-        // Add caching headers for better performance
-        const headers = new Headers(response.headers);
-        if (path.endsWith('.css')) {
-          headers.set('Content-Type', 'text/css');
-          headers.set('Cache-Control', 'public, max-age=86400');
-        } else if (path.endsWith('.html')) {
-          headers.set('Content-Type', 'text/html');
-          headers.set('Cache-Control', 'public, max-age=3600');
-        }
-        
-        return new Response(response.body, {
-          status: 200,
-          headers: headers
-        });
+        return response;
       }
     } catch (e) {
-      // Asset not found - return null
+      // Asset not found
     }
     return null;
   },
