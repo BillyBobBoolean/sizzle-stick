@@ -2,17 +2,6 @@ name = "sizzle-stick"
 main = "src/index.ts"
 compatibility_date = "2025-05-13"
 
-# Serve static assets from the public folder
+# THIS IS THE CRITICAL ADDITION - tells Cloudflare to serve files from /public
 [assets]
-directory = "./public/pages"
-binding = "ASSETS"
-
-# For production
-[env.production]
-routes = [
-  { pattern = "sizzlestick.com/*", zone_id = "YOUR_ZONE_ID" }
-]
-
-# For development
-[env.dev]
-vars = { ENVIRONMENT = "development" }
+directory = "./public"
