@@ -94,4 +94,16 @@ export default {
     }
     return null;
   }
+  
 };
+// Debug endpoint - remove after testing
+if (path === '/debug') {
+  const files = ['/index.html', '/structural.html', '/artisanal.html', '/bio.html', '/styles.css'];
+  let results = '<h1>Asset Debug</h1><ul>';
+  for (const f of files) {
+    const test = await this.serveAsset(f, request, env);
+    results += `<li>${f}: ${test ? '✅ Found' : '❌ Not found'}</li>`;
+  }
+  results += '</ul>';
+  return new Response(results, { headers: { 'Content-Type': 'text/html' } });
+}
