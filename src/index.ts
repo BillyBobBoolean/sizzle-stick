@@ -9,6 +9,24 @@ export default {
     const url = new URL(request.url);
     let path = url.pathname;
     
+    // Debug endpoint - shows which files are available
+    if (path === '/debug') {
+      const files = ['/index.html', '/structural.html', '/artisanal.html', '/bio.html', '/styles.css'];
+      let results = '<h1>🔍 Asset Debug</h1><ul>';
+      
+      for (const file of files) {
+        const found = await this.checkAsset(file, request, env);
+        results += `<li>${file}: ${found ? '✅ Found' : '❌ Not found'}</li>`;
+      }
+      
+      results += '</ul><p>Worker is running correctly.</p>';
+      results += '<p><a href="/">Back to Home</a></p>';
+      
+      return new Response(results, {
+        headers: { 'Content-Type': 'text/html' }
+      });
+    }
+    
     // Handle root path
     if (path === '/') {
       path = '/index.html';
@@ -16,7 +34,6 @@ export default {
     
     // If no file extension, try adding .html (for /structural, /artisanal, /bio)
     if (!path.includes('.')) {
-      // Try the path with .html
       const tryPath = `${path}.html`;
       const response = await this.serveAsset(tryPath, request, env);
       if (response) return response;
@@ -56,7 +73,7 @@ export default {
         <div class="container">
           <h1>404</h1>
           <p>The page <code>${path}</code> was not found.</p>
-          <p><a href="/">← Return to Homepage</a></p>
+          <p><a href="/debug">🔍 Run Debug</a> | <a href="/">← Return to Homepage</a></p>
           <hr style="margin: 2rem 0; border-color: #2a2a2a;">
           <p><small>SizzleStick Welding | Cloudflare Worker</small></p>
         </div>
@@ -93,17 +110,17 @@ export default {
       // Asset not found - return null
     }
     return null;
+  },
+
+  async checkAsset(path: string, request: Request, env: Env): Promise<boolean> {
+    try {
+      const url = new URL(request.url);
+      const assetUrl = new URL(path, url.origin);
+      const assetRequest = new Request(assetUrl.toString(), { method: 'HEAD' });
+      const response = await env.ASSETS.fetch(assetRequest);
+      return response.status === 200;
+    } catch (e) {
+      return false;
+    }
   }
-  
 };
-// Debug endpoint - remove after testing
-if (path === '/debug') {
-  const files = ['/index.html', '/structural.html', '/artisanal.html', '/bio.html', '/styles.css'];
-  let results = '<h1>Asset Debug</h1><ul>';
-  for (const f of files) {
-    const test = await this.serveAsset(f, request, env);
-    results += `<li>${f}: ${test ? '✅ Found' : '❌ Not found'}</li>`;
-  }
-  results += '</ul>';
-  return new Response(results, { headers: { 'Content-Type': 'text/html' } });
-}
